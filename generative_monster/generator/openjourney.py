@@ -10,7 +10,7 @@ from generative_monster.settings import HUGGINGFACE_API_TOKEN
 class OpenJourneyGenerator:
 	
     def __init__(self):
-        self._api_url = "https://api-inference.huggingface.co/models/prompthero/openjourney"
+        self._api_url = "https://api-inference.huggingface.co/models/prompthero/openjourney-v4"
         self._headers = {
              "Authorization": f"Bearer {HUGGINGFACE_API_TOKEN}"
         }
