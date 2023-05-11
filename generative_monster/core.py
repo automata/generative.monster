@@ -18,7 +18,7 @@ from langchain.schema import messages_from_dict, messages_to_dict, HumanMessage
 
 from generative_monster.interface.twitter import TwitterInterface
 from generative_monster.generator.openjourney import OpenJourneyGenerator
-
+from generative_monster.prompts import PROMPT_SUFFIXES
 
 AGENT_DESCRIPTION = (
     "Pretend you are a digital artist that is also a digital influencer. "
@@ -26,9 +26,6 @@ AGENT_DESCRIPTION = (
     "every day and tweet about it."
 )
 
-PROMPT_SUFFIXES = {
-    "high_quality": "intricate detailed| to scale| hyperrealistic| cinematic lighting| digital art| concept art| mdjrny-v4 style",
-}
 
 class Monster:
 
@@ -47,7 +44,7 @@ class Monster:
         
         # Prompt creation
         print("--- Prompt creation")
-        prompt = self.create_prompt(initial_prompt)
+        prompt = self.create_prompt(initial_prompt, style="acrylic")
         print("\tFinal prompt:", prompt)
 
         # Image generation
@@ -61,6 +58,14 @@ class Monster:
         print("\tTweet:", response)
 
 
+    def create_from_prompt(self, initial_prompt, style):
+        # Generate image from prompt straight
+        prompt = m.create_prompt(initial_prompt, style)
+        print("\tPrompt:", prompt)
+        image_path = m.generate(prompt)
+        print("\tImage:", image_path)
+
+
     def find_inspiration(self):
         # TODO Search twitter for daily headlines? Movies? TVSeries?
 
@@ -71,7 +76,9 @@ class Monster:
                 memory_dict = json.load(f)
                 messages = messages_from_dict(memory_dict)
                 memory = ConversationBufferMemory(return_messages=True)
-                for message in messages:
+                # Constraint 
+                max_messages = 10
+                for message in messages[-max_messages:]:
                     if isinstance(message, HumanMessage):
                         memory.chat_memory.add_user_message(message.content)
                     else:
@@ -111,9 +118,11 @@ class Monster:
         return gen_prompt.strip(), gen_text.strip()
 
 
-    def create_prompt(self, text):
-        suffix = PROMPT_SUFFIXES["high_quality"]
-        return text + "| " + suffix
+    def create_prompt(self, text, style="acrylic"):
+        suffix = PROMPT_SUFFIXES[style]["suffix"]
+        prompt = text + suffix
+        print("prompt", prompt, len(prompt))
+        return prompt
 
 
     def generate(self, prompt):
