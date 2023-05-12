@@ -60,9 +60,9 @@ class Monster:
 
     def create_from_prompt(self, initial_prompt, style):
         # Generate image from prompt straight
-        prompt = m.create_prompt(initial_prompt, style)
+        prompt = self.create_prompt(initial_prompt, style)
         print("\tPrompt:", prompt)
-        image_path = m.generate(prompt)
+        image_path = self.generate(prompt)
         print("\tImage:", image_path)
 
 
@@ -95,7 +95,7 @@ class Monster:
             HumanMessagePromptTemplate.from_template("{input}")
         ])
 
-        llm = ChatOpenAI(temperature=0)
+        llm = ChatOpenAI(temperature=0.5)
         conversation = ConversationChain(
             memory=memory,
             prompt=prompt,
@@ -135,6 +135,3 @@ class Monster:
         ti = TwitterInterface()
         res = ti.tweet_with_images(text, image_paths)
         return res
-
-m = Monster()
-m.create()

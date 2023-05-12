@@ -1,7 +1,7 @@
 PROMPT_SUFFIXES = {
     "high_quality": {
         "source": "prompthero",
-        "suffix": "| intricate detailed| to scale| hyperrealistic| cinematic lighting| digital art| concept art| mdjrny-v4 style"
+        "suffix": "| intricate detailed| to scale| hyperrealistic| cinematic lighting| digital art| concept art"
     },
     "acrylic": {
         "source": "https://prompthero.com/prompt/e771e31e3d4",
