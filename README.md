@@ -1,6 +1,6 @@
 # Generative Monster
 
-![](https://pbs.twimg.com/media/FvoKtgdWYBoOv5o?format=jpg&name=small)
+![](https://pbs.twimg.com/media/FvnwKZ_XwAIXmW0?format=jpg&name=small)
 
 Fully autonomous generative/AI artist.
 
@@ -43,8 +43,17 @@ pip install .
 
 # Running
 
-For now, just run the core:
+Run the full creation chain: inspiration, prompt engineering, image generation
+and communication:
 
 ```
-python generative_monster/core.py
+python generative_monster/cli.py create
 ```
+
+Useful to debug, run only prompt engineering and image generation:
+
+```
+python generative_monster/cli.py create-from-prompt "some prompt" "some style"
+```
+
+Note that the styles are the ones supported in `generative_monster/prompts.py`.
