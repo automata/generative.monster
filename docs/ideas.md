@@ -2,12 +2,16 @@
 
 ## Generative
 
-- search twitter for new prompts (@HBCoop_, @nickfloats)
+- search twitter for new prompts (@HBCoop_, @nickfloats, etc)
 - image-to-image using @archillect tweets
 - text-to-animation using stable animation SDK
 - more vectorial
 - select prompt randomly
 - select prompt based on tweet likes
+
+## Prompt Engineering
+
+- append tags about generative AI (#generativeai, etc)
 
 ## Interfaces
 
