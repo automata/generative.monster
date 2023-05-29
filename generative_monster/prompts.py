@@ -14,5 +14,17 @@ PROMPT_SUFFIXES = {
     "bright_pastel": {
         "source": "https://prompthero.com/prompt/b316b2db89e",
         "suffix": ", inspired by OffWhite, tumblr, inspired by Yanjun Cheng style, digital art, lofi girl internet meme, trending on dezeen, catalog photo, 3 d render beeple, rhads and lois van baarle, cartoon style illustration, bright pastel colors, a beautiful artwork illustration, retro anime girl <lora:iu_V35:0. 5> <lora:epiNoiseoffset_v2:0. 5>"
+    },
+    "max_rive": {
+        "source": "https://www.midjourney.com/app/jobs/cf579c17-3918-4287-9aac-d6e81771a151/",
+        "suffix": "Detailed epic shot, by Max Rive, by Dan Mumford, incredible crimson color palette, dramatic cinematic atmosphere, epic composition, ultra contrast, hyper detailed, volumetric, vibrant colored stars, astrology, amazing liquid space matter, anti matter, 16k, 32k"
+	},
+	"android": {
+		"source": "https://www.midjourney.com/app/jobs/6fe2bae2-7d60-4b38-ac65-89e99866649b/",
+		"suffix": "Hyper realistic, latex and leather, action pose, cybernetics, robotic character intricately sculpted, gun belt and holster, straps and buckles, military gear, beautiful dynamic composition, photo - realistic techniques, scoutcore, dramatic spotlight horror cinematic lighting, symmetry"
+	},
+    "wes_anderson": {
+        "source": "",
+        "suffix": ", in the style of Wes Anderson, hyper realistic, symmetry, 16k"
     }
 }
