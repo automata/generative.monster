@@ -43,7 +43,8 @@ class Monster:
             print("Warning: It was too long! Shortening:", text)
         
         # Appending hashtags
-        tweet_content = text + "\n\n" + HASHTAGS
+        # tweet_content = text + "\n\n" + HASHTAGS
+        tweet_content = HASHTAGS
         print("Tweet content:", tweet_content)
 
         # Deciding on style
@@ -87,7 +88,7 @@ class Monster:
                 messages = messages_from_dict(memory_dict)
                 memory = ConversationBufferMemory(return_messages=True)
                 # Constraint 
-                max_messages = 10
+                max_messages = 50
                 for message in messages[-max_messages:]:
                     if isinstance(message, HumanMessage):
                         memory.chat_memory.add_user_message(message.content)

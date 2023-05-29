@@ -25,4 +25,4 @@ AGENT_DESCRIPTION = (
 TEMPERATURE = 0.9
 
 # Hashtags to append to tweet
-HASHTAGS = "#ai #aiart #generativeai #midjourney #openjourney #chatgpt #gpt"
+HASHTAGS = "#ai #aiart #aiartcommunity #generativeai #midjourney #openjourney #chatgpt #gpt"
