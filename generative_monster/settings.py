@@ -10,6 +10,9 @@ ACCESS_TOKEN_SECRET = os.environ["TWITTER_ACCESS_TOKEN_SECRET"]
 # Hugging Face
 HUGGINGFACE_API_TOKEN = os.environ["HUGGINGFACE_API_TOKEN"]
 
+# Leap AI
+LEAP_API_TOKEN = os.environ["LEAP_API_TOKEN"]
+
 # OpenAI
 OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
 
@@ -26,3 +29,9 @@ TEMPERATURE = 0.9
 
 # Hashtags to append to tweet
 HASHTAGS = "#ai #aiart #aiartcommunity #generativeai #midjourney #openjourney #chatgpt #gpt"
+
+# Twitter accounts to cite on tweets
+GENERATORS_TWITTER_ACCOUNTS = {
+    "leap": "@leap_api",
+    "openjourney": "@huggingface"
+}

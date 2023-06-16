@@ -1,6 +1,7 @@
 import os
 import json
 import random
+import numpy as np
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -18,14 +19,15 @@ from langchain.schema import messages_from_dict, messages_to_dict, HumanMessage
 
 from generative_monster.interface.twitter import TwitterInterface
 from generative_monster.generator.openjourney import OpenJourneyGenerator
+from generative_monster.generator.leap import LeapGenerator
 from generative_monster.prompts import PROMPT_SUFFIXES
-
-from settings import (
+from generative_monster.utils.image import open_image, resize_image, save_image
+from generative_monster.settings import (
     AGENT_DESCRIPTION,
     HASHTAGS,
-    TEMPERATURE
+    TEMPERATURE,
+    GENERATORS_TWITTER_ACCOUNTS
 )
-
 
 class Monster:
 
@@ -33,7 +35,7 @@ class Monster:
         pass
 
 
-    def create(self):
+    def create(self, publish=True):
         # Inspiration
         print("-- Memory and inspiration")
         text = self.find_inspiration()
@@ -44,8 +46,8 @@ class Monster:
         
         # Appending hashtags
         # tweet_content = text + "\n\n" + HASHTAGS
-        tweet_content = HASHTAGS
-        print("Tweet content:", tweet_content)
+        # tweet_content = HASHTAGS
+        # print("Tweet content:", tweet_content)
 
         # Deciding on style
         print("--- Style")
@@ -60,21 +62,47 @@ class Monster:
 
         # Image generation
         print("-- Image generation")
-        image_path = self.generate(prompt)
+        available_generators = ["openjourney", "leap"]
+        selected_generator = random.choice(available_generators)
+        print("Selected generator:", selected_generator)
+        image_path = self.generate(prompt, generator=selected_generator)
+        if not image_path:
+            print("Failed to generate image. Please try again later... aborting.")
+            return
         print("Generated image:", image_path)
         
+        # Validate image
+        print("-- Validating image")
+        if not self.is_valid(image_path):
+            print("Not a valid image. Please try again later... aborting.")
+            return
+        print("Valid image...")
+
+        # Scale up
+        print("-- Scaling image up")
+        scale_factor = 2
+        image_path = self.scale_image(image_path, scale_factor)
+        print(f"Scaled image by x{scale_factor}")
+
         # Communication
-        print("-- Communication")
-        response = self.publish(tweet_content, [image_path])
-        print("Tweet:", response)
+        if publish:
+            # generator_twitter = GENERATORS_TWITTER_ACCOUNTS[selected_generator]
+            # tweet_content = f"Generated using {generator_twitter} API"
+            tweet_content = ""
+            print("-- Communication")
+            response = self.publish(tweet_content, prompt, [image_path])
+            print("Tweet:", response)
+
+        return image_path
 
 
-    def create_from_prompt(self, initial_prompt, style):
+    def create_from_prompt(self, initial_prompt, style, generator="openjourney"):
         # Generate image from prompt straight
         prompt = self.create_prompt(initial_prompt, style)
         print("\tPrompt:", prompt)
-        image_path = self.generate(prompt)
+        image_path = self.generate(prompt, generator)
         print("\tImage:", image_path)
+        return image_path
 
 
     def find_inspiration(self):
@@ -131,17 +159,36 @@ class Monster:
 
     def create_prompt(self, text, style="acrylic"):
         suffix = PROMPT_SUFFIXES[style]["suffix"]
-        prompt = text + suffix
+        prompt = text + " " + suffix
         return prompt
 
 
-    def generate(self, prompt):
-        gen = OpenJourneyGenerator()
+    def generate(self, prompt, generator="openjourney"):
+        if generator == "openjourney":
+            gen = OpenJourneyGenerator()
+        elif generator == "leap":
+            gen = LeapGenerator()
         image_path = gen.generate(prompt)
         return image_path
 
 
-    def publish(self, text, image_paths):
+    def publish(self, text, prompt, image_paths):
         ti = TwitterInterface()
-        res = ti.tweet_with_images(text, image_paths)
+        res = ti.tweet_with_images(text, prompt, image_paths)
         return res
+
+
+    def scale_image(self, image_path, scale_factor=2):
+        original_image = open_image(image_path)
+        resized_image = resize_image(original_image, scale_factor)
+        # Overwrite original path for now
+        save_image(resized_image, image_path)
+        return image_path
+
+
+    def is_valid(self, image_path):
+        # Pitch black images are not valid
+        image = open_image(image_path)
+        image_array = np.array(image)
+        image_mean = image_array.mean()
+        return image_mean > 0.0

@@ -31,9 +31,10 @@ class TwitterInterface:
         self._api = tweepy.API(self._auth)
 
 
-    def upload_media(self, image_path):
+    def upload_media(self, image_path, alt_text):
         media = self._api.media_upload(image_path)
         media_id = media.media_id
+        self._api.create_media_metadata(media_id, alt_text)
         return media_id
 
 
@@ -54,9 +55,9 @@ class TwitterInterface:
         return self._client.create_tweet(text=text)
 
 
-    def tweet_with_images(self, text, image_paths):
+    def tweet_with_images(self, text, prompt, image_paths):
         media_ids = []
         for image_path in image_paths:
-            media_id = self.upload_media(image_path)
+            media_id = self.upload_media(image_path, prompt)
             media_ids.append(media_id)
         return self.tweet(text, media_ids)
