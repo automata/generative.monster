@@ -2,24 +2,26 @@
 
 ## Generative
 
-- search twitter for new prompts (@HBCoop_, @nickfloats, etc)
-- image-to-image using @archillect tweets
-- text-to-animation using stable animation SDK
-- more vectorial
-- select prompt randomly
-- select prompt based on tweet likes
+- [ ] search twitter for new prompts (@HBCoop_, @nickfloats, etc)
+- [ ] image-to-image using @archillect tweets
+- [ ] text-to-animation using stable animation SDK
+- [ ] more vectorial
+- [x] select prompt randomly
+- [ ] select prompt based on tweet likes
+- [x] append tags about generative AI (#generativeai, etc)
 
-## Prompt Engineering
+## LLM
 
-- append tags about generative AI (#generativeai, etc)
+- [ ] use a vector db (pinecone ai) to improve memory and text content generation
+- [ ] use twitter trends to get inspiration (explore more twitter)
 
 ## Interfaces
 
-- discord
-- reddit
-- instagram
-- generative.monster gallery
+- [ ] reddit
+- [ ] discord
+- [ ] instagram
+- [ ] generative.monster gallery
 
 ## Engagement
 
-- tweet every hour (like @archillect)
+- [x] tweet every hour (like @archillect)
